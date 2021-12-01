@@ -46,7 +46,7 @@ def main():
     pOn.plot(pumpOnInit, 'tab:green')
     pOn.set_ylim(2.5, 3.4) """
 
-    idleLargeData = read("idle2.log")
+    """ idleLargeData = read("idle2.log")
     print(len(idleLargeData))
     idleAvgData = read("idle2.log", 10)
     print(len(idleAvgData))
@@ -56,9 +56,9 @@ def main():
     onAvgData = read("pumpon2.log", 10)
     print(len(onAvgData))
 
-    large, (lidle, lidleavg, lOnavg, lOn) = plt.subplots(4)
+    large, (lidle, lidleavg, lOnavg, lOn) = plt.subplots(4, figsize = (16,8))
 
-    plt.subplots_adjust(left = 0.03, right = 0.989, bottom = 0.03, top = 0.97, wspace = 0.202, hspace = 0.324)
+    plt.subplots_adjust(left = 0.035, right = 0.995, bottom = 0.035, top = 0.96, wspace = 0.202, hspace = 0.324)
 
     lidle.set_title("Idle 10 samples ps")
     lidle.plot(idleLargeData, 'tab:red')
@@ -78,7 +78,11 @@ def main():
     lOnavg.set_title("Line Pressure 10:1 samples ps")
     lOnavg.plot(onAvgData, 'tab:purple')
     lOnavg.set_ylim(3.05, 3.15)
-    lOnavg.set_xlim(0, len(onAvgData))
+    lOnavg.set_xlim(0, len(onAvgData))"""
+
+    data = read("tap.log", 10)
+
+    plt.plot(data)
 
 
     plt.show()
