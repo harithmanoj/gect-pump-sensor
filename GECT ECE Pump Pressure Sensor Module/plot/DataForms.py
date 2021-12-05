@@ -29,6 +29,18 @@ class GraphData:
     def getName(self):
         raise NotImplementedError()
 
+    def getSubList(self, lastSize):
+        if(self.getLength() >= lastSize):
+            return self.value[(self.getLength() - lastSize):]
+        else:
+            return self.value
+
+    def getSubListRange(self, lastSize):
+        if(self.getLength() >= lastSize):
+            return (self.getLength() - lastSize, self.getLength())
+        else:
+            return (0, self.getLength())
+
 class RawData(GraphData):
 
     def __init__(self, axsFrom: float, axsTo: float):
