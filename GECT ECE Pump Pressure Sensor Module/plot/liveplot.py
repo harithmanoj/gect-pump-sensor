@@ -136,7 +136,7 @@ def main():
 
     com = SerialCommunication(port, rate, 1)
 
-    anim = FuncAnimation(figure, draw, interval = 200)
+    anim = FuncAnimation(figure, draw, interval = 1000)
 
     plt.show()
 

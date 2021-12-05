@@ -2,91 +2,80 @@
 
 import matplotlib.pyplot as plt
 
-def read(file, averaging = 1):
+def read(file):
 
     f = open(file, "r", encoding = 'utf-8')
 
     data = []
-    buffer = []
 
     for line in f:
         if(line != "\n"):
-            buffer.append(float(line) * 3.3 / 1024)
-            if(len(buffer) == averaging):
-                sum = 0
-                for item in buffer:
-                    sum = sum + item
-                buffer.clear()
-                sum = float(sum) / float(averaging)
-                data.append(sum)
+            data.append(float(line) * 3.3 / 1024)
+            
             
     f.close()
 
     return data
 
+def constrained(lower, value, diff):
+    if(lower + diff > value):
+        return lower
+    else:
+        return (value - diff)
+
+def blockedAverage(data, averagingSize : float, shouldPreserve : bool):
+
+    ret = []
+    value = 0.0
+    last = 0.0
+    count = 0
+    for i in data:
+        if(count != (averagingSize)):
+            value += i
+            if shouldPreserve:
+                ret.append(last)
+            count += 1
+        else:
+            value /= averagingSize
+            last = value
+            ret.append(value)
+            value = i
+            count = 1
+    return ret
+
+def movingAverage(data, averagingSize : float):
+
+    ret = []
+    value = 0.0
+
+    for i in range(0, len(data)):
+        if(i >= averagingSize):
+            value -= data[i - averagingSize]
+        value += data[i]
+        div = averagingSize
+        if(i < averagingSize):
+            div = i + 1
+        ret.append(value / div)
+
+    return ret
+
+
 
 def main():
 
-    """ idleData = read("idleNotConnected.log")
-    pumpoff = read("pump off.log")
-    pumpOnInit = read("pump on init.log")
-
-    fig, (idle, pOn, pOff) = plt.subplots(3)
-
-    plt.subplots_adjust(left = 0.03, right = 0.97, bottom = 0.03, top = 0.97)
-
-    idle.set_title("Idle")
-    idle.plot(idleData, 'tab:red')
-
-    pOff.set_title("Pump OFF")
-    pOff.plot(pumpoff, 'tab:blue')
-    pOn.set_ylim(2.5, 3.4)
-
-    pOn.set_title("Pump ON")
-    pOn.plot(pumpOnInit, 'tab:green')
-    pOn.set_ylim(2.5, 3.4) """
-
-    """ idleLargeData = read("idle2.log")
-    print(len(idleLargeData))
-    idleAvgData = read("idle2.log", 10)
-    print(len(idleAvgData))
-
-    onLargeData = read("pumpon2.log")
-    print(len(onLargeData))
-    onAvgData = read("pumpon2.log", 10)
-    print(len(onAvgData))
-
-    large, (lidle, lidleavg, lOnavg, lOn) = plt.subplots(4, figsize = (16,8))
-
-    plt.subplots_adjust(left = 0.035, right = 0.995, bottom = 0.035, top = 0.96, wspace = 0.202, hspace = 0.324)
-
-    lidle.set_title("Idle 10 samples ps")
-    lidle.plot(idleLargeData, 'tab:red')
-    lidle.set_ylim(0.035, 0.040)
-    lidle.set_xlim(0, len(idleLargeData))
-
-    lidleavg.set_title("Idle average 10:1 samples ps")
-    lidleavg.plot(idleAvgData, 'tab:green')
-    lidleavg.set_ylim(0.035, 0.040)
-    lidleavg.set_xlim(0, len(idleAvgData))
-
-    lOn.set_title("Line Pressure 10 samples ps")
-    lOn.plot(onLargeData, 'tab:blue')
-    lOn.set_ylim(3.05, 3.15)
-    lOn.set_xlim(0, len(onLargeData))
-
-    lOnavg.set_title("Line Pressure 10:1 samples ps")
-    lOnavg.plot(onAvgData, 'tab:purple')
-    lOnavg.set_ylim(3.05, 3.15)
-    lOnavg.set_xlim(0, len(onAvgData))"""
-
-    data = read("tap.log", 10)
+    data = read("dataLogs/filelive.log")
+    mov = movingAverage(data, 10)
+    block = blockedAverage(mov, 10, True)
 
     plt.plot(data)
+    plt.plot(mov)
+    plt.plot(block)
+
+    plt.legend(["raw", "moving Average", "blocked average"])
 
 
     plt.show()
-
+   
 
 if __name__ == "__main__":
 
