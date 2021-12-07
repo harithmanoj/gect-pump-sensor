@@ -55,17 +55,18 @@ class RawData(GraphData):
 
 class MovingAverage(GraphData):
 
-    def __init__(self, axsFrom: float, axsTo: float, averageSize: int):
+    def __init__(self, axsFrom: float, axsTo: float, averageSize: int, getPopValue):
 
         self.averagingSize = averageSize
         self.sum: float = 0.0
+        self.getPopValue = getPopValue
 
         super().__init__(axsFrom, axsTo)
 
     def update(self, value: float):
 
         if(len(self.value) >= (self.averagingSize)):
-            self.sum -= self.value[len(self.value) - self.averagingSize]
+            self.sum -= self.getPopValue(self.averagingSize)
             self.sum += value
             self.value.append(self.sum / self.averagingSize)
         else:

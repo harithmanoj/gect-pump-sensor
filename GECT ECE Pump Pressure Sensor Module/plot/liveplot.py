@@ -25,7 +25,7 @@ def display(data, ymin, ymax, title, color):
     return axis
 
 averagingWindow: int = 10
-windowSize: int = 200
+windowSize: int = 300
 
 rawData = RawData(1024, 3.3)
 movingAverage = MovingAverage(1, 1, averagingWindow)
@@ -52,17 +52,12 @@ def update(value : float):
 
 com = None
 
-value = []
-
 def draw(i):
     
     global com
-    '''while com.waiting() != 0:
+    while com.waiting() != 0:
         str_ = com.readline()
         update(float(str_))
-    '''
-    for i in range(2):
-        update(value.pop())
 
     global rawLine
     global avgLine
@@ -83,15 +78,11 @@ def draw(i):
 def main():
     
     global com
-    '''rate = 9600
+    rate = 9600
     port = SerialCommunication.acquirePortsWith("CH340")
 
-    com = SerialCommunication(port, rate, 1)'''
-    global value
-
-    for item in range(0, 5000):
-        value.append((math.sin(item * 2 * math.pi / 100) * item / 2500) + 1.13)
-
+    com = SerialCommunication(port, rate, 1)
+    
     anim = FuncAnimation(figure, draw, interval = 200)
 
     plt.show()

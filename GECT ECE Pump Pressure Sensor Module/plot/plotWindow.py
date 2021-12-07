@@ -3,7 +3,7 @@
 
 from logging import root
 from sys import api_version
-from typing import List
+from typing import Any, List
 
 from matplotlib.figure import Figure
 from scrollableSourceList import SourceList
@@ -49,7 +49,9 @@ def plotFunction(
                 fromValue, toValue, source, fig, canvas
             ):
 
-    graphs: list[GraphData] = []
+    graphs : list[GraphData]= []
+
+    orig = (fromValue, toValue)
 
     if(rawEnable == 1):
         graphs.append(RawData(fromValue, toValue))
@@ -57,7 +59,9 @@ def plotFunction(
         toValue = 1
     
     if(movingEnable == 1):
-        graphs.append(MovingAverage(fromValue, toValue, movingAverageSize))
+        graphs.append(
+            MovingAverage(fromValue, toValue, movingAverageSize, 
+            lambda x, graphs = graphs: graphs[0].getValue(graphs[0].getLength() - (x + 1))))
         fromValue = 1
         toValue = 1
 
