@@ -154,8 +154,6 @@ class AverageGradient(GraphData):
         return self.name + " Average Distance {" + str(self.averagingWindow) + "} of " + self.inputData.name
 
         
-        
-
-        
-
-        
+Graphs = [
+    "Raw Data", "Moving Average", "Blocked Average", "Average Gradient"
+]
