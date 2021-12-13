@@ -27,9 +27,12 @@ def display(data, ymin, ymax, title, color):
 averagingWindow: int = 10
 windowSize: int = 300
 
+save = RawData(1,1)
+
 rawData = RawData(1024, 3.3)
-movingAverage = MovingAverage(1, 1, averagingWindow)
-cutDown = BlockedAverage(1, 1, averagingWindow)
+movingAverage = MovingAverage(1, 1, averagingWindow, 
+    lambda x: rawData.getValue(rawData.getLength() - (x + 1)), str(averagingWindow))
+cutDown = BlockedAverage(1, 1, averagingWindow, "of mov 10")
 
 figure = plt.figure()
 
@@ -47,6 +50,7 @@ def update(value : float):
     global cutDown
 
     rawData.update(value)
+    save.update(value)
     movingAverage.update(rawData.top())
     cutDown.update(movingAverage.top())
 
@@ -87,7 +91,7 @@ def main():
 
     plt.show()
 
-    f = open("dataLogs/file.log", "w")
+    f = open("dataLogs/rc_47k1uF_Filter.log", "w")
 
     for item in rawData.value:
         f.write(str(item) + "\n")

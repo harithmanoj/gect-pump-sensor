@@ -4,14 +4,12 @@ import matplotlib.pyplot as plt
 import math
 
 
-
-
 def main():
 
     value = ([], [])
 
     R = 47000
-    C = 1 * (10**-6)
+    C = 5 * (10**-6)
 
     fc = 1 / (2 * math.pi * R *C)
     print(fc)
