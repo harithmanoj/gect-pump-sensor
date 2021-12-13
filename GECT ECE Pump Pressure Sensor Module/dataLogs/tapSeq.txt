@@ -1,0 +1,12 @@
+rc_47k1uF_Filter
+l on
+l onoff
+r on
+r onoff
+l on r on r off l off
+l slow off (2s)
+r slow off (2s)
+l slow on (2s)
+r slow on (2s)
+
+rc_47k1uF_mk2
