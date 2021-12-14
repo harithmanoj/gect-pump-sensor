@@ -17,6 +17,14 @@ def read(file):
 
     return data
 
+def readPWL(file):
+
+    f = open(file, "r", encoding = 'utf-8')
+
+    data = []
+
+    for line
+
 def main():
 
     file = input("File name :")
