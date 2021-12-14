@@ -2,7 +2,7 @@
 
 # (C) Harith Manoj 2021
 
-def read(file):
+def read(file, conv):
 
     f = open(file, "r", encoding = 'utf-8')
 
@@ -10,7 +10,7 @@ def read(file):
 
     for line in f:
         if(line != "\n"):
-            data.append(float(line) * 3.3 / 1024)
+            data.append(float(line) * conv)
             
             
     f.close()
@@ -19,11 +19,13 @@ def read(file):
 
 def main():
 
-    file = input("File name :")
+    file = input("File name: ")
 
-    sampling = float(input("Sampling freq :"))
+    sampling = float(input("Sampling freq: "))
 
-    data = read(file)
+    conv = float(input("Conversion Factor: "))
+
+    data = read(file, conv)
 
     f = open(file + ".pwl", 'w', encoding = 'utf-8')
 
