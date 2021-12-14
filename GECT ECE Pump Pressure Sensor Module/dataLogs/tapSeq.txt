@@ -9,4 +9,14 @@ r slow off (2s)
 l slow on (2s)
 r slow on (2s)
 
-rc_47k1uF_mk2
+rc_47k10uF_Filter
+
+l 
+l slow 
+r discard
+r slow
+l , r
+l slow off, fast on
+l slow on, fast off
+r ""
+
