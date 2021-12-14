@@ -91,7 +91,7 @@ def main():
 
     plt.show()
 
-    f = open("dataLogs/rc_47k1uF_Filter.log", "w")
+    f = open("dataLogs/rc_47k10uF_Filter.log", "w")
 
     for item in rawData.value:
         f.write(str(item) + "\n")
@@ -103,5 +103,3 @@ def main():
 if __name__ == "__main__":
     main()
     
-
-
