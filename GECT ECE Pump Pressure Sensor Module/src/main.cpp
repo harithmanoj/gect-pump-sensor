@@ -16,8 +16,8 @@ void loop()
 {
   digitalWrite(BUILTIN_LED, (led ? HIGH : LOW));
   Serial.println(analogRead(pressurePin));
-  led = ((count % 10) > 7 ? true : false);
+  led = ((count % 40) > 28 ? true : false);
   ++count;
-  delay(100);
+  delay(25);
   
 }

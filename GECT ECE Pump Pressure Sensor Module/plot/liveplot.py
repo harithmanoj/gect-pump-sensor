@@ -91,7 +91,7 @@ def main():
 
     plt.show()
 
-    f = open("dataLogs/rc_47k10uF_Filter.log", "w")
+    f = open("dataLogs/25msDataPot5to3.log", "w")
 
     for item in rawData.value:
         f.write(str(item) + "\n")
