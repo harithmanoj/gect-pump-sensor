@@ -91,10 +91,10 @@ def plotFunction(
     
         inputValue.append(0)
 '''
-    tapMarks = StepDetector(
+    '''tapMarks = StepDetector(
         blockingAverageSize,
         lambda x, graphs = graphs: (getTripletValues(x, graphs)), 25 * 3.3 / 1024.0, " Moving Average Tap Detection"
-        )
+        )'''
     
     f = open(source(), "r", encoding = 'utf-8')
 
@@ -106,7 +106,7 @@ def plotFunction(
                     g.update(value)
                 else:
                     g.update(graphs[i].top())
-            tapMarks.update(graphs[1].top())
+            '''tapMarks.update(graphs[1].top())'''
     plt.clf()
 
     axes = fig().add_subplot(111)
@@ -117,10 +117,10 @@ def plotFunction(
         axes.plot(g.getData())
         legend.append(g.getName())
 
-    for x in tapMarks.getData():
+    '''for x in tapMarks.getData():
         axes.annotate('Tap', xy = (x, graphs[1].getValue(x) + 0.1), xytext = (x, graphs[1].getValue(x) + 0.2), 
             arrowprops = dict(facecolor = 'green', shrink = 0.05 ))
-
+    '''
     axes.legend(legend)
 
     global xMax
