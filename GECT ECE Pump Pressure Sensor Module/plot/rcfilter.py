@@ -9,7 +9,7 @@ def main():
     value = ([], [])
 
     R = 47000
-    C = 5 * (10**-6)
+    C = 10 * (10**-6)
 
     fc = 1 / (2 * math.pi * R *C)
     print(fc)

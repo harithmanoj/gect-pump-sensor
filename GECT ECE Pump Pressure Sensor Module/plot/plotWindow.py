@@ -34,7 +34,7 @@ def read(file):
 
     for line in f:
         if(line != "\n"):
-            data.append(float(line) * 3.3 / 1024)
+            data.append(float(line))
             
             
     f.close()
