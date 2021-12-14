@@ -1,5 +1,6 @@
 # live plot pressure data
 
+from pathlib import Path
 from typing import List
 from serialCommunication import SerialCommunication
 
@@ -91,7 +92,14 @@ def main():
 
     plt.show()
 
-    f = open("dataLogs/25msDataPot5to3.log", "w")
+    file = "dataLogs/25msDataPot5to3"
+    ext = ".log"
+
+    while Path(file + ext).is_file():
+        file += str(1)
+    
+
+    f = open(file + ext, "w")
 
     for item in rawData.value:
         f.write(str(item) + "\n")
