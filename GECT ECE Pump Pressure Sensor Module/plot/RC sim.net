@@ -1,0 +1,7 @@
+* F:\source\gect-pump-sensor\GECT ECE Pump Pressure Sensor Module\plot\RC sim.asc
+V1 N001 0 PWL file="F:\source\gect-pump-sensor\GECT ECE Pump Pressure Sensor Module\dataLogs\filelive.log.pwl"
+C1 N002 0 10µ
+R1 N002 N001 56k
+.tran 0 566.5 0 0.1
+.backanno
+.end
