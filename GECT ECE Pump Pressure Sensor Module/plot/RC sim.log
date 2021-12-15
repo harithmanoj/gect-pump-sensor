@@ -361,8 +361,8 @@ V1: Removing PWL point (147.825,2.7124)
 V1: Removing PWL point (147.95,2.71777)
 Direct Newton iteration for .op point succeeded.
 
-Date: Tue Dec 14 17:29:15 2021
-Total elapsed time: 0.349 seconds.
+Date: Wed Dec 15 10:17:12 2021
+Total elapsed time: 0.842 seconds.
 
 tnom = 27
 temp = 27
@@ -372,9 +372,9 @@ traniter = 44940
 tranpoints = 22471
 accept = 22471
 rejected = 0
-matrix size = 3
+matrix size = 6
 fillins = 0
 solver = Normal
-Matrix Compiler1: 50 bytes object code size  0.1/0.1/[0.1]
-Matrix Compiler2: 175 bytes object code size  0.1/0.1/[0.1]
+Matrix Compiler1: 128 bytes object code size  0.1/0.1/[0.1]
+Matrix Compiler2: 346 bytes object code size  0.1/0.1/[0.1]
 
