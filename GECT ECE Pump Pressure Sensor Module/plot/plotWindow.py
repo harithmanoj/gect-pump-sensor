@@ -30,12 +30,15 @@ def read(file):
 
     f = open(file, "r", encoding = 'utf-8')
 
-    data = []
+    data: list[list[float]] = []
 
     for line in f:
         if(line != "\n"):
-            data.append(float(line))
-            
+            stringList = line.split()
+            fltList = []
+            for val in stringList:
+                fltList.append(float(val))
+            data.append(fltList)
             
     f.close()
 
@@ -62,6 +65,7 @@ def plotFunction(
             ):
 
     graphs : list[GraphData] = []
+    aux : list[RawData] = []
     inputValue : list[int] = []
 
     orig = (fromValue, toValue)
@@ -97,16 +101,29 @@ def plotFunction(
         )'''
     
     f = open(source(), "r", encoding = 'utf-8')
-
+    auxInput = 0
     for line in f:
         if(line != "\n"):
-            value = float(line)
-            for (g, i) in zip(graphs, inputValue):
-                if(i == -1):
-                    g.update(value)
+
+            stringSplit = line.split()
+            while (len(aux) < len(stringSplit) - 1):
+                aux.append(RawData(1,1, "Aux input " + str(auxInput)))
+                auxInput += 1
+
+            for iter in range(len(stringSplit)):
+                value = float(stringSplit[iter])
+
+                if(iter == 0):
+                    for (g, i) in zip(graphs, inputValue):
+                        if(i == -1):
+                            g.update(value)
+                        else:
+                            g.update(graphs[i].top())
+                    '''tapMarks.update(graphs[1].top())'''
                 else:
-                    g.update(graphs[i].top())
-            '''tapMarks.update(graphs[1].top())'''
+                    aux[iter - 1].update(value)
+
+            
     plt.clf()
 
     axes = fig().add_subplot(111)
@@ -114,6 +131,10 @@ def plotFunction(
     legend = []
 
     for g in graphs:
+        axes.plot(g.getData())
+        legend.append(g.getName())
+    
+    for g in aux:
         axes.plot(g.getData())
         legend.append(g.getName())
 
@@ -171,7 +192,8 @@ def main():
         lambda: (canvas)
         )
 
-    tk.mainloop()
+    rootWindow.mainloop()
+    
 
 if __name__ == "__main__":
     main()
