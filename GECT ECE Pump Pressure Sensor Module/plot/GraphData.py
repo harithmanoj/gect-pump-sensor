@@ -79,9 +79,12 @@ class MovingAverageGraph(GraphData):
 
         super().update(self.sum / len)
 
+    def update(self):
+        self.update(self.inputData.top())
+
     def getName(self):
 
-        return self.name + " Moving Average {" + str(self.averagingWindow) + "} of " + self.inputData.name
+        return self.name + " | Moving Average {" + str(self.averagingWindow) + "} of " + self.inputData.name
 
 class BlockedAverageGraph(GraphData):
 
@@ -111,10 +114,34 @@ class BlockedAverageGraph(GraphData):
         
         super().update(self.last)
 
+    def update(self):
+        self.update(self.inputData.top())
+
     def getName(self):
 
-        return self.name + " Blocked Average {" + str(self.averagingWindow) + "} of " + self.inputData.name
+        return self.name + " | Blocked Average {" + str(self.averagingWindow) + "} of " + self.inputData.name
+
+class Gradient(GraphData):
+
+    def __init__(self, axsFrom: float, axsTo: float, inputGraph: GraphData, name = ""):
+
+        self.inputData = inputGraph
+        super().__init__(axsFrom, axsTo, name)
   
+
+    def update(self, value: float):
+
+        if(self.inputData.getLength() < 2):
+            super().update(value)
+        else:
+            super().update(value - self.inputData.getValue(self.inputData.getLength() - 2))
+
+    def update(self):
+        self.update(self.inputData.top())
+
+    def getName(self):
+        
+        return self.name + " | Gradient of " + self.inputData.name
 class AverageGradient(GraphData):
 
     def __init__(self, axsFrom: float, axsTo: float, 
@@ -149,9 +176,12 @@ class AverageGradient(GraphData):
 
         super().update(self.currBlock - self.prevBlock)
 
+    def update(self):
+        self.update(self.inputData.top())
+
     def getName(self):
         
-        return self.name + " Average Distance {" + str(self.averagingWindow) + "} of " + self.inputData.name
+        return self.name + " | Average Distance {" + str(self.averagingWindow) + "} of " + self.inputData.name
 
         
 Graphs = [
