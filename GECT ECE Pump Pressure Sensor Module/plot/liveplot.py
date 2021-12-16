@@ -35,6 +35,10 @@ movingAverage = MovingAverage(1, 1, averagingWindow,
     lambda x: rawData.getValue(rawData.getLength() - (x + 1)), str(averagingWindow))
 cutDown = BlockedAverage(1, 1, averagingWindow, "of mov 10")
 
+auxCount = 2
+
+aux = [RawData(1,3), RawData(1,3)]
+
 figure = plt.figure()
 
 rawLine = plt.plot(rawData.getSubList(windowSize), 'tab:red')
@@ -44,25 +48,40 @@ cutLine = plt.plot(cutDown.getSubList(windowSize), 'tab:blue')
 plt.legend(["raw", "moving Average", "blocked average"])
 
 
-def update(value : float):
+def updateFlt(value: float, auxVal: list[float]):
     
     global rawData
     global movingAverage
     global cutDown
+    global aux
 
     rawData.update(value)
-    save.update(value)
     movingAverage.update(rawData.top())
+    save.update(value)
     cutDown.update(movingAverage.top())
+    for (val, a) in zip(auxVal, aux):
+        a.update(val)
+
+def update(strVal: str):
+    splitVal = strVal.split()
+    splitflt = []
+
+    for sp in splitVal:
+        splitflt.append(float(sp))
+
+    updateFlt(splitflt[0], splitflt[1:])
 
 com = None
+#cm: list[str] = []
 
 def draw(i):
     
     global com
     while com.waiting() != 0:
         str_ = com.readline()
-        update(float(str_))
+        update(str_)
+    #for i in range(0,10):
+    #    update(strVal = cm.pop())
 
     global rawLine
     global avgLine
@@ -70,7 +89,6 @@ def draw(i):
     global figure    
     windowBound = rawData.getSubListRange(windowSize)
     windowRange = range(windowBound[0], windowBound[1])
-    print(rawData.getLength(), movingAverage.getLength(), cutDown.getLength(), sep = ' ')
     rawLine[0].set_data(windowRange, rawData.getSubList(windowSize))
     avgLine[0].set_data(windowRange, movingAverage.getSubList(windowSize))
     cutLine[0].set_data(windowRange, cutDown.getSubList(windowSize))
@@ -81,7 +99,12 @@ def draw(i):
         
 
 def main():
-    
+#     global cm
+
+#     for i in range(0,1000):
+#         cm.append(str(i) + " " + str(i+1) + " " + str(i+2))
+
+#     cm.reverse()
     global com
     rate = 9600
     port = SerialCommunication.acquirePortsWith("CH340")
@@ -92,17 +115,22 @@ def main():
 
     plt.show()
 
-    file = "dataLogs/25msDataPot5to3"
+    file = "dataLogs/sample"
     ext = ".log"
 
-    while Path(file + ext).is_file():
-        file += str(1)
+    count = 1
+    while Path(file + str(count) + ext).is_file():
+        count += 1
     
 
-    f = open(file + ext, "w")
-
-    for item in rawData.value:
-        f.write(str(item) + "\n")
+    f = open(file + str(count) + ext, "w")
+    f.write(str(40) + "\n")
+    f.write("Pressure_2nd fallingPulse risingPulse\n")
+    for i in range(save.getLength()):
+        strVal = str(save.getValue(i))
+        for a in aux:
+            strVal = strVal + " " + str(a.getValue(i))
+        f.write(strVal + "\n")
 
     f.close()
 

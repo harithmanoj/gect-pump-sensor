@@ -52,43 +52,40 @@ def read(file, graph, inputVal, aux):
     f = open(file, "r", encoding = 'utf-8')
 
     freq = 0
-    col = 0
     head = []
 
     state = 0
     counter = 0
 
     for l in f:
-        if(state == 0):
-            if l.startswith("t"):
-                freq = None
-            else:
-                freq = float(l)
-            state += 1
-        elif (state == 1):
-            col = int(l)
-            state += 1
-        elif (state == 2):
-            head = l.split()
-            state += 1
+        if(l != "\n"):
+            if(state == 0):
+                if l.startswith("t"):
+                    freq = None
+                else:
+                    freq = float(l)
+                state += 1
+            elif (state == 1):
+                head = l.split()
+                state += 1
 
-            for i in range(1, len(head)):
-                aux.append(RawData(1,1, ""))
-                aux[i - 1].name = head[i] + " : " + aux[i - 1].name
-                
-        else:
-            value = float(l)
-            if(counter == 0):
-                for (g, i) in zip(graph, inputVal):
-                        if(i == -1):
-                            g.update(value)
-                        else:
-                            g.update(graph[i].top())
-                '''tapMarks.update(graphs[1].top())'''
+                for i in range(1, len(head)):
+                    aux.append(RawData(1,1, ""))
+                    aux[i - 1].name = head[i] + " : " + aux[i - 1].name
+                    
             else:
-                aux[counter - 1].update(value)
-            counter += 1
-            counter = counter % col
+                valList = l.split()
+                value = float(valList[0])
+                for (g, i) in zip(graph, inputVal):
+                    if(i == -1):
+                        g.update(value)
+                    else:
+                        g.update(graph[i].top())
+                '''tapMarks.update(graphs[1].top())'''
+
+                for iter in range(1, len(valList)):
+                    value = float(valList[iter])
+                    aux[iter - 1].update(value)
     return (freq, head[0])
 
 
