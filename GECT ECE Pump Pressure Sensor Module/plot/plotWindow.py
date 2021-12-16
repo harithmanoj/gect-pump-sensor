@@ -12,6 +12,7 @@ import pathlib
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
 NavigationToolbar2Tk)
+import numpy
 
 import tkinter as tk
 
@@ -43,6 +44,56 @@ def read(file):
     f.close()
 
     return data
+
+def read(file, graph, inputVal, aux):
+    
+    isHeader = False
+
+    f = open(file, "r", encoding = 'utf-8')
+
+    freq = 0
+    col = 0
+    head = []
+
+    state = 0
+    counter = 0
+
+    for l in f:
+        if(state == 0):
+            if l.startswith("t"):
+                freq = None
+            else:
+                freq = float(l)
+            state += 1
+        elif (state == 1):
+            col = int(l)
+            state += 1
+        elif (state == 2):
+            head = l.split()
+            state += 1
+
+            for i in range(1, len(head)):
+                aux.append(RawData(1,1, ""))
+                aux[i - 1].name = head[i] + " : " + aux[i - 1].name
+                
+        else:
+            value = float(l)
+            if(counter == 0):
+                for (g, i) in zip(graph, inputVal):
+                        if(i == -1):
+                            g.update(value)
+                        else:
+                            g.update(graph[i].top())
+                '''tapMarks.update(graphs[1].top())'''
+            else:
+                aux[counter - 1].update(value)
+            counter += 1
+            counter = counter % col
+    return (freq, head[0])
+
+
+
+            
 
 xMax = 0
 
@@ -100,42 +151,29 @@ def plotFunction(
         lambda x, graphs = graphs: (getTripletValues(x, graphs)), 25 * 3.3 / 1024.0, " Moving Average Tap Detection"
         )'''
     
-    f = open(source(), "r", encoding = 'utf-8')
-    auxInput = 0
-    for line in f:
-        if(line != "\n"):
+    (freq, head) = read(source(), graphs, inputValue, aux)
 
-            stringSplit = line.split()
-            while (len(aux) < len(stringSplit) - 1):
-                aux.append(RawData(1,1, "Aux input " + str(auxInput)))
-                auxInput += 1
+    for g in graphs:
+        g.name = head + ": " + g.name 
 
-            for iter in range(len(stringSplit)):
-                value = float(stringSplit[iter])
-
-                if(iter == 0):
-                    for (g, i) in zip(graphs, inputValue):
-                        if(i == -1):
-                            g.update(value)
-                        else:
-                            g.update(graphs[i].top())
-                    '''tapMarks.update(graphs[1].top())'''
-                else:
-                    aux[iter - 1].update(value)
-
-            
     plt.clf()
 
     axes = fig().add_subplot(111)
 
     legend = []
 
+    t = []
+    if(freq == None):
+        t = list(range(0, len(graphs[0].getLength())))
+    else:
+        t = list(numpy.linspace(0, graphs[0].getLength() / freq, graphs[0].getLength()))
+
     for g in graphs:
-        axes.plot(g.getData())
+        axes.plot(t, g.getData())
         legend.append(g.getName())
     
     for g in aux:
-        axes.plot(g.getData())
+        axes.plot(t, g.getData())
         legend.append(g.getName())
 
     '''for x in tapMarks.getData():
