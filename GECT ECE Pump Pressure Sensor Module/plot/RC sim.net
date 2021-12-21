@@ -1,0 +1,35 @@
+* F:\source\gect-pump-sensor\GECT ECE Pump Pressure Sensor Module\plot\RC sim.asc
+V1 N002 0 PWL file="F:\source\gect-pump-sensor\GECT ECE Pump Pressure Sensor Module\dataLogs\25msDataPot5to3.log.pwl"
+C1 N003 0 33µ
+R1 N003 N002 47k
+R2 N004 N003 47k
+C2 N004 0 10µ
+V2 N001 0 AC 1 0
+R3 N001 0 100k
+XU1 N004 N005 NC_01 NC_02 N005 level.1 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+XU2 N009 N014 NC_03 NC_04 N014 level.1 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+XU3 N012 N006 NC_05 NC_06 N007 level.1 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+R4 N006 N005 15k
+R5 N012 N014 15k
+R6 N007 N006 680k
+R7 0 N012 680k
+R8 N009 N004 68k
+C3 N009 0 22µ
+XU4 N013 N011 N010 0 N008 LT1720
+V3 N011 0 300m
+V4 N010 0 5
+XU5 N017 N013 N010 0 N016 LT1720
+V5 N017 0 -300m
+R9 N013 N007 47k
+C4 N013 0 10µ
+V6 N019 0 2.66
+R10 N018 N019 100k
+R11 N018 N016 900k
+R12 N015 N019 100k
+R13 N015 N008 900k
+.tran 0 148 0 0.025
+* .ac lin 10000 10m 100
+.lib LTC.lib
+.lib UniversalOpamps2.sub
+.backanno
+.end
