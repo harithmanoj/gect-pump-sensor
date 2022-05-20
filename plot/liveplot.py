@@ -30,14 +30,15 @@ windowSize: int = 300
 
 save = RawData(1,1)
 
-rawData = RawData(1024, 3.3)
+rawData = RawData(1, 1)
 movingAverage = MovingAverage(1, 1, averagingWindow, 
     lambda x: rawData.getValue(rawData.getLength() - (x + 1)), str(averagingWindow))
 cutDown = BlockedAverage(1, 1, averagingWindow, "of mov 10")
 
-auxCount = 2
+auxCount = 6
 
-aux = [RawData(1,3), RawData(1,3)]
+aux = [RawData(1, 1), RawData(1, 1), RawData(1, 1), RawData(1,3*4096), RawData(1,3*4096), RawData(1,0.5*4096)]
+auxName = ["firstOrder", "secondOrder", "thirdOrder", "fallPulse", "risePulse", "tapCount"]
 
 figure = plt.figure()
 
@@ -45,7 +46,12 @@ rawLine = plt.plot(rawData.getSubList(windowSize), 'tab:red')
 avgLine = plt.plot(movingAverage.getSubList(windowSize), 'tab:green')
 cutLine = plt.plot(cutDown.getSubList(windowSize), 'tab:blue')
 
-plt.legend(["raw", "moving Average", "blocked average"])
+auxLine = []
+
+for ax in aux:
+    auxLine.append(plt.plot(ax.getSubList(windowSize)))
+
+plt.legend(["raw", "moving Average", "blocked average"] + auxName)
 
 
 def updateFlt(value: float, auxVal: list[float]):
@@ -68,8 +74,10 @@ def update(strVal: str):
 
     for sp in splitVal:
         splitflt.append(float(sp))
+    
+    print(splitflt)
 
-    updateFlt(splitflt[0], splitflt[1:])
+    updateFlt(splitflt[0],splitflt[1:])
 
 com = None
 #cm: list[str] = []
@@ -92,6 +100,10 @@ def draw(i):
     rawLine[0].set_data(windowRange, rawData.getSubList(windowSize))
     avgLine[0].set_data(windowRange, movingAverage.getSubList(windowSize))
     cutLine[0].set_data(windowRange, cutDown.getSubList(windowSize))
+    
+    for (ln, ax) in zip(auxLine, aux):
+        ln[0].set_data(windowRange, ax.getSubList(windowSize))
+
 
     figure.gca().relim()
     figure.gca().autoscale_view()
@@ -106,8 +118,8 @@ def main():
 
 #     cm.reverse()
     global com
-    rate = 9600
-    port = SerialCommunication.acquirePortsWith("CH340")
+    rate = 115200
+    port = SerialCommunication.acquirePortsWith("CP210x")
 
     com = SerialCommunication(port, rate, 1)
     
@@ -115,21 +127,35 @@ def main():
 
     plt.show()
 
-    file = "dataLogs/sample"
+    file = "dataLogs/multitest"
     ext = ".log"
 
-    count = 1
-    while Path(file + str(count) + ext).is_file():
-        count += 1
-    
+    if Path(file + ext).is_file():
+        count = 1
+        while Path(file + str(count) + ext).is_file():
+            count += 1
+        file = file + str(count)
 
-    f = open(file + str(count) + ext, "w")
-    f.write(str(40) + "\n")
-    f.write("Pressure_2nd fallingPulse risingPulse\n")
+
+    f = open(file + ext, "w")
+    f.write(str(20) + "\n")
+
+    head = "Pressure "
+
+    for hd in auxName:
+        head += hd + ' '
+
+    head += "\n"
+
+    f.write(head)
     for i in range(save.getLength()):
         strVal = str(save.getValue(i))
-        for a in aux:
-            strVal = strVal + " " + str(a.getValue(i))
+
+        strVal += ' '
+
+        for ax in aux:
+            strVal += str(ax.getValue(i)) + ' '
+        
         f.write(strVal + "\n")
 
     f.close()

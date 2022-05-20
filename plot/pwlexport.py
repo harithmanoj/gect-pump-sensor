@@ -10,12 +10,14 @@ def read(file, conv):
 
     for line in f:
         if(line != "\n"):
-            data.append(float(line) * conv)
-            
-            
+            data.append(line)
+    fltdata = []
+
+    for i in range(2, len(data)):
+        fltdata.append(float(data[i]) * conv    )
     f.close()
 
-    return data
+    return fltdata
 
 def main():
 

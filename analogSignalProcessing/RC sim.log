@@ -1,5 +1,63 @@
-Circuit: * F:\source\gect-pump-sensor\GECT ECE Pump Pressure Sensor Module\plot\RC sim.asc
+Circuit: * F:\source\gect-pump-sensor\analogSignalProcessing\RC sim.asc
 
+V6: Removing PWL point (0.3,2.33907)
+V6: Removing PWL point (3.375,2.34521)
+V6: Removing PWL point (6.775,2.34767)
+V6: Removing PWL point (7.35,2.35749)
+V6: Removing PWL point (18.75,2.36241)
+V6: Removing PWL point (20.5,2.35749)
+V6: Removing PWL point (23.925,2.36118)
+V6: Removing PWL point (45.05,2.35872)
+V6: Removing PWL point (45.3,2.35749)
+V6: Removing PWL point (46.75,2.35872)
+V6: Removing PWL point (53.05,2.29853)
+V6: Removing PWL point (64.975,2.33784)
+V6: Removing PWL point (65.15,2.37838)
+V6: Removing PWL point (65.275,2.37838)
+V6: Removing PWL point (66.3,2.37961)
+V6: Removing PWL point (73.925,2.36241)
+V6: Removing PWL point (75.05,2.36486)
+V6: Removing PWL point (82.175,2.35872)
+V6: Removing PWL point (84.35,2.35995)
+V6: Removing PWL point (86.7,2.35872)
+V6: Removing PWL point (87,2.36241)
+V6: Removing PWL point (87.075,2.35872)
+V6: Removing PWL point (89.1,2.36241)
+V6: Removing PWL point (94.725,2.35995)
+V6: Removing PWL point (102.425,2.35872)
+V6: Removing PWL point (103.425,2.36609)
+V6: Removing PWL point (104.025,2.35749)
+V6: Removing PWL point (106.35,2.35749)
+V6: Removing PWL point (107.075,2.35995)
+V6: Removing PWL point (107.9,2.35872)
+V6: Removing PWL point (109.5,2.35995)
+V6: Removing PWL point (114.1,2.35872)
+V6: Removing PWL point (117.525,2.35749)
+V6: Removing PWL point (119.55,2.35749)
+V6: Removing PWL point (120.325,2.35872)
+V6: Removing PWL point (121.05,2.35749)
+V6: Removing PWL point (124.575,2.35872)
+V6: Removing PWL point (125.575,2.35749)
+V6: Removing PWL point (136.75,2.34029)
+V6: Removing PWL point (138.85,2.33907)
+V6: Removing PWL point (140.925,2.35872)
+V6: Removing PWL point (145.6,2.35872)
+V6: Removing PWL point (147.25,2.35872)
+V6: Removing PWL point (152.075,2.35872)
+V6: Removing PWL point (152.3,2.33907)
+V6: Removing PWL point (153.725,2.10565)
+V6: Removing PWL point (155.1,2.14251)
+V6: Removing PWL point (167.85,2.37961)
+V6: Removing PWL point (177.35,2.30713)
+V6: Removing PWL point (179.875,2.29975)
+V6: Removing PWL point (183.925,2.49509)
+V6: Removing PWL point (184.825,2.37961)
+V6: Removing PWL point (188.925,2.35627)
+V6: Removing PWL point (226.45,2.36241)
+V6: Removing PWL point (265.925,2.35627)
+V6: Removing PWL point (267.225,2.35872)
+V6: Removing PWL point (271.5,2.35749)
+V6: Removing PWL point (272.8,2.35749)
 V1: Removing PWL point (0.025,2.71777)
 V1: Removing PWL point (0.175,2.71777)
 V1: Removing PWL point (0.375,2.71777)
@@ -359,6 +417,7 @@ V1: Removing PWL point (147.5,2.7124)
 V1: Removing PWL point (147.675,2.72314)
 V1: Removing PWL point (147.825,2.7124)
 V1: Removing PWL point (147.95,2.71777)
+WARNING: Less than two connections to node N003.  This node is used by V1.
 Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
 Starting Gmin stepping
 Gmin = 10
@@ -380,21 +439,21 @@ Gmin = 0
 Gmin stepping succeeded in finding the operating point.
 
 
-Date: Tue Dec 21 16:59:24 2021
-Total elapsed time: 1.484 seconds.
+Date: Wed Mar 16 14:50:43 2022
+Total elapsed time: 2.525 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 57591
-traniter = 57070
-tranpoints = 24829
-accept = 24178
-rejected = 651
-matrix size = 43
-fillins = 25
+totiter = 116041
+traniter = 115541
+tranpoints = 52374
+accept = 51445
+rejected = 929
+matrix size = 45
+fillins = 30
 solver = Normal
-Thread vector: 18.6/12.6[2] 5.9/4.6[2] 3.4/2.9[2] 0.5/1.1[1]  2592/500
-Matrix Compiler1: 3.54 KB object code size  2.0/1.1/[0.7]
-Matrix Compiler2: 3.97 KB object code size  1.2/1.9/[0.7]
+Thread vector: 19.7/6.0[2] 2.4/1.7[2] 1.4/1.2[2] 0.3/0.6[1]  2592/500
+Matrix Compiler1: 3.74 KB object code size  0.8/0.4/[0.3]
+Matrix Compiler2: 4.16 KB object code size  0.5/0.8/[0.4]
 
