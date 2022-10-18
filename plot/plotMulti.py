@@ -1,3 +1,5 @@
+
+# (C) Harith Manoj 2021
 import pathlib
 import matplotlib.pyplot as plt
 

@@ -1,4 +1,5 @@
 # Plot Settings class
+# (C) Harith Manoj 2021
 
 import tkinter as tk
 from tkinter.constants import GROOVE

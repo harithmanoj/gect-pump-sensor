@@ -1,5 +1,6 @@
 
 # Scrollable Source list
+# (C) Harith Manoj 2021
 
 import tkinter as tk
 from tkinter.constants import END, GROOVE, SINGLE

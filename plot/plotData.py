@@ -1,5 +1,7 @@
 # Python to plot pressure data collected
 
+# (C) Harith Manoj 2021
+
 import matplotlib.pyplot as plt
 
 def read(file):

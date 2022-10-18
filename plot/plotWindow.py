@@ -1,4 +1,5 @@
 # Python Application to plot line feed seperated values.
+# (C) Harith Manoj 2021
 
 
 from logging import root
